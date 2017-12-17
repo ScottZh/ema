@@ -1,0 +1,83 @@
+<h3 *ngIf="isLoading"><i>Loading heroes ... </i></h3>
+<h3 *ngIf="!isLoading">Select a hero:</h3>
+
+<div>
+  <button (click)="getHeroes()" class="btn btn-primary"><mat-icon>autorenew</mat-icon></button>
+  
+  <button (click)="add()" ><mat-icon>add</mat-icon></button>
+</div>
+<mat-list fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px">
+  <mat-list-item class="heroes" *ngFor="let hero of heroes | async  ">
+    <label class = "badge"> {{hero.id}}</label>
+    <label> {{hero.name}}</label>
+    <button mat-icon-button (click)="removeHero(hero)" ><mat-icon>delete</mat-icon></button>
+  </mat-list-item>
+</mat-list>
+   <!--<ul class="heroes">
+      <li *ngFor="let hero of heroes | async  "
+        [class.selected]="hero === selectedHero"
+        (click)="select(hero)">
+        <span class = "badge"> {{hero.id}}</span>
+        <span> {{hero.name}}</span>
+         <button class="destroy" (click)="removeHero(hero)"></button>
+      </li>
+          </ul>
+ <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px">
+   
+ <div *ngFor="let hero of heroes | async   ">
+ <mat-card [style.background]="'lightGrey'" >
+  <mat-card-header>
+    <div mat-card-avatar class="example-header-image"></div>
+    <mat-card-title>{{hero.id}}</mat-card-title>
+    <mat-card-title>{{hero.name}}</mat-card-title>
+    <mat-card-title>{{hero.degree}}</mat-card-title>
+  </mat-card-header>
+  <img mat-card-image src="assets/img//machine.jpg">
+  <mat-card-content>
+    <p>
+      The Shiba Inu is the smalles
+      dog from Japan.
+    </p>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button  (click)="select(hero)"><mat-icon>description</mat-icon></button>
+    <button mat-button  (click)="removeHero(hero)"><mat-icon>delete</mat-icon></button>
+  </mat-card-actions>
+</mat-card>
+ </div>
+</div>-->
+ <!--edit selected hero form-->
+    <div *ngIf="detail" >
+      <div *ngIf="selectedHero" >
+        <hr>
+        <h2>Hero Detail</h2>
+        <h3>Editing: {{selectedHero.name}}</h3>
+        <hero-detail  [hero]="selectedHero"  (notify)='onNotify($event)'></hero-detail>
+      </div>
+    </div>
+ <!--add new hero form-->
+<div *ngIf="addnew" >
+  <div>Add new Hero</div>
+<p>heroForm value: {{ heroForm.value | json}}</p>
+<form [formGroup]="heroForm" (ngSubmit)="addNew()" novalidate>
+  <div style="margin-bottom: 1em">
+    <button type="submit"
+            [disabled]="heroForm.pristine" class="btn btn-success">Save</button> &nbsp;
+            
+  </div>
+
+  <!-- Hero Detail Controls -->
+  <div class="form-group">
+      <label class="center-block">Name:
+        <input class="form-control" formControlName="name">
+      </label>
+  </div>
+ <div class="form-group">
+      <label class="center-block">Degree:
+        <input class="form-control" formControlName="degree">
+      </label>
+  </div>
+
+</form>
+
+</div>
