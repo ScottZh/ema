@@ -11,11 +11,11 @@ export  class CatRouter {
    * endpoints.
    */
   init() {
-    this.router.post('/cat', this.create);
-    this.router.get('/cat', this.getAll);
-    this.router.get('/cat/:id', this.getOne);
-    this.router.put('/cat', this.updateOne);
-    this.router.delete('/cat/:id', this.deleteOne);
+    this.router.post('/:cat', this.create);
+    this.router.get('/:cat', this.getAll);
+    this.router.get('/:cat/:id', this.getOne);
+    this.router.put('/:cat', this.updateOne);
+    this.router.delete('/:cat/:id', this.deleteOne);
   }
 
 
@@ -45,7 +45,7 @@ export  class CatRouter {
             .send({
               message: 'Success',
               status: res.status,
-              data: dbResp.data
+              data: dbResp.results
             });
       }
     });
@@ -66,12 +66,13 @@ export  class CatRouter {
           status: res.status
         });
       } else {
+      
         res.status(201)
           res.location(`${config.httpHeader}/${tableName}/${dbResp.data.insertId}`)
             .send({
               message: 'Success',
               status: res.status,
-              data: dbResp.data
+              data:dbResp.results
             });
       }
     });
@@ -96,7 +97,7 @@ export  class CatRouter {
             .send({
               message: 'Success',
               status: res.status,
-              data: dbResp.data
+              data:dbResp.results
             });
       }
     });
@@ -120,7 +121,7 @@ export  class CatRouter {
             .send({
               message: 'Success',
               status: res.status,
-              data: dbResp.data
+              data:dbResp.results
             });
       }
 

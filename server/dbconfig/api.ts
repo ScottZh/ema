@@ -98,7 +98,7 @@ export  namespace dao {
     Object.keys(item).forEach(key => {
       keyValuePairs.push([key, item[key]]);
     });
-    keyValuePairs.push(['createTime', 'now()']);
+    keyValuePairs.push(['createTime', new Date().toLocaleString()]);
 
     const l = keyValuePairs.length;
     const keyReplacement = Array(l).fill('??').join(', ');
@@ -111,18 +111,19 @@ export  namespace dao {
        (error, results)=>{
          if (error){ throw error;
          } else {
-            if(results){
-        // Retrieve data from database, so the client has the updated object with id, timestamp etc.
-            this.read( results.insertId, tableName, (innerDbResp) =>{
-              if (innerDbResp.error) {
-                cb({error: innerDbResp.error});
-              } else {
-                cb({
-                  error: null,
-                  data: innerDbResp.data
-                });
-              }
-            });
+            if(results){ 
+        // Retrieve data from database, so the client has the updated object with id, timestamp etc.  
+          this.read( results.insertId, tableName, (innerDbResp) =>{
+            if (innerDbResp.error) {
+              cb({error: innerDbResp.error});
+            } else {
+              cb({
+                error: null,
+                data: innerDbResp.results
+              });
+            }
+      })
+ 
            }else{
             cb({
               error: {

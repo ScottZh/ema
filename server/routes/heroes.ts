@@ -33,9 +33,9 @@ export  class HeroRouter {
   public create(req: Request, res: Response, next: NextFunction) {
 
     const hero = req.body;
-    const Hero = req.params.hero;
+    const tableName: string = "hero";
 
-    dao.create(hero, Hero, (dbResp) => {
+    dao.create(hero, tableName, (dbResp) => {
       if (dbResp.error) {
         res.status(500).send({
           message: 'Server error',
@@ -47,7 +47,7 @@ export  class HeroRouter {
             .send({
               message: 'Success',
               status: res.status,
-              data: dbResp.data
+              data: dbResp.results
             });
       }
     });
@@ -59,9 +59,9 @@ export  class HeroRouter {
    */
   public getOne(req: Request, res: Response, next: NextFunction) {
     const heroId = req.params.id;
-    const Hero = req.params.hero;
+    const tableName = req.params.hero;
 
-    dao.read(heroId, Hero, (dbResp) => {
+    dao.read(heroId, tableName, (dbResp) => {
       if (dbResp.error) {
         res.status(500).send({
           message: 'Server error',
@@ -72,7 +72,7 @@ export  class HeroRouter {
             .send({
               message: 'Success',
               status: res.status,
-              data: dbResp.data
+              data: dbResp.results
             });
       }
     });
@@ -82,9 +82,9 @@ export  class HeroRouter {
    * UPDATE one hero by id
    */
   public updateOne(req: Request, res: Response, next: NextFunction) {
-    const Hero = req.params.hero;
+    const tableName = req.params.hero;
 
-      dao.update(req.body, Hero, (dbResp) => {
+      dao.update(req.body, tableName, (dbResp) => {
 
       if (dbResp.error) {
         res.status(500).send({
@@ -96,7 +96,7 @@ export  class HeroRouter {
             .send({
               message: 'Success',
               status: res.status,
-              data: dbResp.data
+              data: dbResp.results
             });
       }
 
@@ -109,9 +109,9 @@ export  class HeroRouter {
    * GET all Resources.
    */
   public getAll(req: Request, res: Response, next: NextFunction) {
-    const Hero = req.params.hero;
+    const tableName = req.params.hero;
 
-      dao.readAll(Hero, (dbResp) => {
+      dao.readAll(tableName, (dbResp) => {
       if (dbResp.error) {
         res.status(500).send({
           message: 'Server error',
@@ -122,7 +122,7 @@ export  class HeroRouter {
             .send({
               message: 'Success',
               status: res.status,
-              data: dbResp.data
+              data: dbResp.results
             });
       }
     });
@@ -133,9 +133,9 @@ export  class HeroRouter {
    */
   public deleteOne(req: Request, res: Response, next: NextFunction) {
     const heroId = req.params.id;
-    const Hero = req.params.hero;
+    const tableName = req.params.hero;
 
-    dao.remove(heroId, Hero, (dbResp) => {
+    dao.remove(heroId, tableName, (dbResp) => {
       if (dbResp.error) {
         res.status(500).send({
           message: 'Server error',
