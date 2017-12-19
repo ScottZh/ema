@@ -119,7 +119,7 @@ export  namespace dao {
             } else {
               cb({
                 error: null,
-                data: innerDbResp.results
+                results: innerDbResp.results
               });
             }
       })
