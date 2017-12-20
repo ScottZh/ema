@@ -20,7 +20,7 @@ export  namespace dao {
                 }
               });
             } else {
-              if (results) {
+              if (results) {console.log("results is " + results);
                 cb({
                   error: null,
                   results: results[0]
@@ -147,7 +147,7 @@ export  namespace dao {
       keyValuePairs.push([key, item[key]]);
     });
      
-     keyValuePairs.push(['createTime', new Date().toLocaleString()]);
+     keyValuePairs.push(['modifiedTime', new Date().toLocaleString()]);
      
     const l = keyValuePairs.length;
     const keyValueReplacement = Array(l).fill('?? = ?').join(', ');
@@ -209,7 +209,7 @@ export  namespace dao {
 
   export function remove(id, tableName: string,  cb) {
 
-    const sql = `DELETE FROM ?? WHERE _id=?`;
+    const sql = `DELETE FROM ?? WHERE id=?`;
     db.query(sql, [tableName, id], (error, results)=>{
       if (error) {
         cb({
