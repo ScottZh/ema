@@ -68,7 +68,7 @@ export  class CatRouter {
       } else {
       
         res.status(201)
-          res.location(`${config.httpHeader}/${tableName}/${dbResp.data.insertId}`)
+          res.location(`${config.httpHeader}/${tableName}/${dbResp.results.insertId}`)
             .send({
               message: 'Success',
               status: res.status,

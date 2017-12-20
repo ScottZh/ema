@@ -112,6 +112,8 @@ export  namespace dao {
          if (error){ throw error;
          } else {
             if(results){ 
+             //// const insertedId:string = ;
+             // console.log("insertedId is " +insertedId);
         // Retrieve data from database, so the client has the updated object with id, timestamp etc.  
           this.read( results.insertId, tableName, (innerDbResp) =>{
             if (innerDbResp.error) {
@@ -145,7 +147,7 @@ export  namespace dao {
       keyValuePairs.push([key, item[key]]);
     });
      
-     keyValuePairs.push(['createTime', 'now()']);
+     keyValuePairs.push(['createTime', new Date().toLocaleString()]);
      
     const l = keyValuePairs.length;
     const keyValueReplacement = Array(l).fill('?? = ?').join(', ');
@@ -167,7 +169,7 @@ export  namespace dao {
         });
       } else {
         if (results) {
-
+               console.log(results);
           if (results.affectedRows === 1) {
 
             // Retrieve data from database, so the client has the updated object with id, timestamp etc.
