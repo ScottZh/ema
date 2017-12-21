@@ -8,7 +8,7 @@ const db = pool;
 
 
 export  namespace dao {
-     
+  const CURRENT_TIMESTAMP = { toSqlString: function() { return 'CURRENT_TIMESTAMP()'; } };
  export function read(id:string, tableName: string, cb )  {
 
           const sql = 'SELECT * from ?? WHERE id = ? LIMIT 1';
@@ -20,7 +20,8 @@ export  namespace dao {
                 }
               });
             } else {
-              if (results) {console.log("results is " + results);
+              if (results) {
+                console.log("resultsId is " + results);
                 cb({
                   error: null,
                   results: results[0]
@@ -112,8 +113,7 @@ export  namespace dao {
          if (error){ throw error;
          } else {
             if(results){ 
-             //// const insertedId:string = ;
-             // console.log("insertedId is " +insertedId);
+
         // Retrieve data from database, so the client has the updated object with id, timestamp etc.  
           this.read( results.insertId, tableName, (innerDbResp) =>{
             if (innerDbResp.error) {
