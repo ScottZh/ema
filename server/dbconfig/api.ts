@@ -3,13 +3,13 @@
 import * as mysql from 'mysql';
 import {pool} from './db';
 import { Request, Response } from "express";
+import { isNullOrUndefined } from 'util';
 
 const db = pool;
 
 
 export  namespace dao {
-  const CURRENT_TIMESTAMP = { toSqlString: function() { return 'CURRENT_TIMESTAMP()'; } };
- export function read(id:string, tableName: string, cb )  {
+ export function read(id:string, tableName: string, cb) {
 
           const sql = 'SELECT * from ?? WHERE id = ? LIMIT 1';
           db.query(sql, [tableName, id], (error, results)=>{
@@ -20,17 +20,19 @@ export  namespace dao {
                 }
               });
             } else {
-              if (results) {
-                console.log("resultsId is " + results);
+              if (Object.keys(results).length != 0)  {
                 cb({
                   error: null,
-                  results: results[0]
+                  results: results
                 });
               } else {
+                console.log('no record in database');
                 cb({
-                  error: {
+                  error:{
                     message: 'not found'
                   }
+                    
+                  
                 });
               }
             }
@@ -48,7 +50,7 @@ export  namespace dao {
           }
         });
       } else {
-        if (results) {
+        if (Object.keys(results).length != 0) {
           cb({
             error: null,
             results: results
@@ -77,7 +79,7 @@ export  namespace dao {
           }
         });
       } else {
-        if (results) {
+        if (Object.keys(results).length != 0) {
           cb({
             error: null,
             results: results[0]

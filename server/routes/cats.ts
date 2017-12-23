@@ -70,7 +70,7 @@ export  class CatRouter {
         res.status(201)
           res.location(`${config.httpHeader}/${tableName}/${dbResp.results.insertId}`)
             .send({
-              message: 'Success',
+              message: 'Success created one data',
               status: res.status,
               data:dbResp.results
             });
@@ -89,13 +89,13 @@ export  class CatRouter {
     dao.read(catId, tableName, (dbResp) => {
       if (dbResp.error) {
         res.status(500).send({
-          message: 'Server error',
+          message: 'not found results: ' + dbResp.results,
           status: res.status
         });
       } else {
         res.status(200)
             .send({
-              message: 'Success',
+              message: 'Success get one results',
               status: res.status,
               data:dbResp.results
             });
@@ -147,7 +147,7 @@ export  class CatRouter {
       } else {
         res.status(200)
             .send({
-              message: 'Success',
+              message: 'Success deleted',
               status: res.status
             });
       }
