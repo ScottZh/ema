@@ -9,7 +9,7 @@
 /node_modules
 
 #db table script
-/.sql
+dbconfig/dbscript.sql
 
 # IDEs and editors
 /.idea
