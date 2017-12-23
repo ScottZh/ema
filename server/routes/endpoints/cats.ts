@@ -1,6 +1,6 @@
 import {Router, Request, Response, NextFunction} from 'express';
-import * as config from '../config';
-import {dao}  from '../dbconfig/api';
+import * as config from '../../config';
+import {dao}  from '../../dbconfig/api';
 
 
 export  class CatRouter {

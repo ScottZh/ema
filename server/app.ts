@@ -4,13 +4,14 @@ import * as express from 'express';
 import * as logger from 'morgan';
 import * as path from 'path';
 
-import {catRouter } from './routes/cats';
-import { heroRouter} from './routes/heroes';
 import {passportInit, 
         welcomeHtmlRouter,
         loginRouter,
         simpleCrudRouter,
-        userRouter} from './routes';
+        userRouter,
+        catRouter,
+        heroRouter
+      } from './routes';
 
 const app: express.Application = express();
 
