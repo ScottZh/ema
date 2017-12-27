@@ -1,17 +1,14 @@
 
 export  interface User {
   id: string;
-  username: { type: String, unique: true, lowercase: true, trim: true },
+  username: string,
   email: string;
-  password?: {
-    hash: string;
-    algorithm: HashingAlgorithm;
-  };
-  role: String;
+  password?: string;
+  role?: string;
+  createTime?: Date;
 }
 
-export type HashingAlgorithm = 'bcrypt';
-export default User;
+
 
 // const schema = (db: any) => {
 // 	let sql_user = 'CREATE TABLE IF NOT EXISTS `users` (' +

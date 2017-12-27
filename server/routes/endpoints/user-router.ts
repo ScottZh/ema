@@ -11,6 +11,9 @@ export class UserRouter {
   init() {
     this.router.post('/users',
         this.postHandler);
+   //     this.router.post('/users',
+   //     function (req, res) {
+   //       res.send("post router called")});
     this.router.get('/users/:id',
     this.getHandler);
   }
@@ -24,20 +27,22 @@ export class UserRouter {
   }
 
   private postHandler(req: Request, res: Response, next: NextFunction) {
-    userDAO.create(req.body.user, req.body.password, (dbResponse => {
-      if (dbResponse.error) {
-        if (dbResponse.error.message === 'User already exists') {
-          res.statusMessage = dbResponse.error.message;
-          res.status(403).send();
+    console.log( "post username is: " +req.body.username + ", password: " + req.body.password)
+       const user = req.body;
+    userDAO.create(user, req.body.password, (dbResp => {
+      if (dbResp.error) {
+        if (dbResp.error.message === 'User already exists') {
+          res.statusMessage = dbResp.error.message;
+          res.status(403).send('problem 403 create user');
         } else {
-          res.statusMessage = dbResponse.error.message;
-          res.status(500).send();
+          res.statusMessage = dbResp.error.message;
+          res.status(500).send('problem 500 create user');
         }
       } else {
         res.status(200).send({
-          message: 'Success',
+          message: 'Success create user',
           status: res.status,
-          data: dbResponse.data
+          data: dbResp.data
         });
       }
     }));
@@ -55,7 +60,7 @@ export class UserRouter {
       } else {
         res.status(200)
             .send({
-              message: 'Success',
+              message: 'Success get user',
               status: res.status,
               data: dbResp.data
             });
@@ -67,6 +72,6 @@ export class UserRouter {
 
 // Create the CrudRouter, and export its configured Express.Router
 const intialRouter = new UserRouter();
-intialRouter.init();
+intialRouter.init();  
 
 export const userRouter = intialRouter.router;

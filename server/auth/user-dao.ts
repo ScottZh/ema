@@ -7,36 +7,32 @@ export namespace userDAO {
 
   export function create(user: User, password: string, cb) {
 
-    const userCopy = JSON.parse(JSON.stringify(user));
+   const userCopy = JSON.parse(JSON.stringify(user));
 
-    dao.readOneByField('email', userCopy.email, 'users', (dbResp) => {
+    dao.readOneByField('email', user.email, 'users', (dbResp) => {
 
       // Condition to create a new is user is no user with this email exists
       // This means that a database error is actually what you expect when creating a new user!
       if (dbResp.error) {
-
         passwordCryptographer.doHash(password).then((hash: string) => {
-          userCopy.password = {
-            hash: hash,
-            algorithm: 'bcrypt'
-          };
+          userCopy.password = hash;
           dao.create(userCopy, 'users', cb);
-        }, (err) => {
-          return cb({
-            error: {
-              message: 'Problem during hashing'
-            }
-          });
-        });
+        }, (error) => {
+                  return cb({
+                    error: {
+                      message: 'Problem during hashing'
+                    }
+                  });
+                });
 
-      } else {
-        // if a user with this email exists, deny creation
-        return cb({
-          error: {
-            message: 'User already exists'
-          }
-        });
-      }
+              } else {
+                // if a user with this email exists, deny creation
+                return cb({
+                  error: {
+                    message: 'User already exists'
+                  }
+                });
+              }
     });
 
   }

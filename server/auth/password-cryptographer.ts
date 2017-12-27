@@ -1,4 +1,4 @@
-import * as bcrypt from 'bcrypt-nodejs';
+import * as bcrypt from 'bcrypt';
 export namespace passwordCryptographer {
 
   function saltRounds() {
@@ -10,7 +10,7 @@ export namespace passwordCryptographer {
     return new Promise(function(resolve, reject) {
 
       bcrypt.genSalt(saltRounds(), (error, salt) => {
-        bcrypt.hash(plaintextPassword, salt, null, function(err, hash) {
+        bcrypt.hash(plaintextPassword, salt,  function(err, hash) {
           if (err) {
             reject(err);
           } else {
@@ -22,12 +22,12 @@ export namespace passwordCryptographer {
     });
 
   }
-
+  
   export function doCompare (plaintextPassword, hash): Promise<boolean> {
 
     return new Promise(function(resolve, reject) {
 
-      bcrypt.compare(plaintextPassword, hash, function(err, res) {
+      bcrypt.compare(plaintextPassword, hash).then(function(err, res) {
         if (err) {
           reject(err);
         } else {

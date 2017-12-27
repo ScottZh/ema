@@ -36,8 +36,8 @@ export namespace passportInit {
   }
 
 
-  export function init(appRouter): string {
-    appRouter.use(passport.initialize());
+  export function init(app): string {
+    app.use(passport.initialize());
     initializePassportLocalStrategy();
     return 'success';
   }
