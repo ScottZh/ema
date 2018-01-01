@@ -1,7 +1,7 @@
 import * as passport from 'passport';
 import * as local from 'passport-local';
 import {passwordCryptographer} from './password-cryptographer';
-import * as dao from '../dbconfig/api';
+import {dao} from '../dbconfig/api';
 
 export namespace passportInit {
 
@@ -12,19 +12,18 @@ export namespace passportInit {
         passwordField : 'password'
       },
       function(email, password, done) {
-
-        this.readOneByField('email', email, 'users', function (dbResp) {
+       dao.readOneByField('email', email, 'users', function (dbResp) {
           if (dbResp.error) {
             // It's better not to disclose whether username OR password is wrong
-            return done(null, false, { message: 'Wrong password or username.' });
-          } else if (!dbResp.data) {
-            return done(null, false, { message: 'Wrong password or username.' });
+            return done(null, false, { message: 'Wrong password or username.passport.ts' });
+          } else if (!dbResp) {
+            return done(null, false, { message: 'Wrong password or username.oassport no data' });
           } else {
-            passwordCryptographer.doCompare(password, dbResp.data.password.hash).then(isMatching => {
+            passwordCryptographer.doCompare(password, dbResp.results.password).then(isMatching => {
               if (!isMatching) {
-                return done(null, false, { message: 'Wrong password or username.' });
-              } else {
-                return done(null, dbResp.data);
+                return done(null, false, { message: 'Wrong password or username.compared no match' });
+              } else { 
+                return done(null, dbResp.results);
               }
             });
           }
