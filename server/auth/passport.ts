@@ -9,9 +9,10 @@ export namespace passportInit {
     const updatedPassport = passport.use('local', new local.Strategy({
         // by default, local strategy uses username and password, we will override with email
         usernameField : 'email',
-        passwordField : 'password'
+        passwordField : 'password',
+        passReqToCallback : true // allows us to pass back the entire request to the callback
       },
-      function(email, password, done) {
+      function(req, email, password, done) {
        dao.readOneByField('email', email, 'users', function (dbResp) {
           if (dbResp.error) {
             // It's better not to disclose whether username OR password is wrong

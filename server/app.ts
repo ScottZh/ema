@@ -3,6 +3,9 @@ import { json, urlencoded } from "body-parser";
 import * as express from 'express';
 import * as logger from 'morgan';
 import * as path from 'path';
+import * as  passport from'passport';
+import * as  flash    from'connect-flash';
+import * as  session  from'express-session';
 
 import {passportInit, 
         welcomeHtmlRouter,
@@ -21,9 +24,16 @@ app.use(logger('dev'));
 app.use(json());
 app.use(urlencoded({ extended: true }));
 
-
+// required for passport
+app.use(session({ secret: "cookie_secret",
+  name: "cookie_name",
+  proxy: true,
+  resave: true,
+  saveUninitialized: true})); // session secret
 // passport config
 passportInit.init(this.app);
+app.use(passport.session()); // persistent login sessions
+app.use(flash()); // use connect-flash for flash messages stored in session
 
  // intercept favicon
   app.get('/favicon.ico', function(req, res) {
